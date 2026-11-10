@@ -1,0 +1,72 @@
+#include <iostream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+// (i) Base class
+class Customer {
+protected:
+    string name;
+
+public:
+    Customer() : name("") {}
+    Customer(string n) : name(n) {}      // used by the derived classes
+
+    void setName(string n) {
+        name = n;
+    }
+
+    string getName() {
+        return name;
+    }
+};
+
+// (ii) Derived class Loan
+class Loan : public Customer {
+private:
+    double loanAmount;
+    double interestRate;
+
+public:
+    Loan(string n, double amount, double rate)
+        : Customer(n), loanAmount(amount), interestRate(rate) {}
+
+    double getLoanAmount() {
+        return loanAmount;
+    }
+
+    double getInterestRate() {
+        return interestRate;
+    }
+};
+
+// (iii) Derived class HomeLoan
+class HomeLoan : public Loan {
+private:
+    double propertyValue;
+
+public:
+    HomeLoan(string n, double amount, double rate, double value)
+        : Loan(n, amount, rate), propertyValue(value) {}
+
+    double getPropertyValue() {
+        return propertyValue;
+    }
+};
+
+int main() {
+    HomeLoan home("Amina Wanjiku", 2500000, 12.5, 4000000);
+
+    cout << fixed << setprecision(2);
+    cout << "----- Bank Loan Management System -----" << endl;
+    cout << "Customer Name  : " << home.getName() << endl;
+    cout << "Loan Amount    : KSh " << home.getLoanAmount() << endl;
+    cout << "Interest Rate  : " << home.getInterestRate() << "%" << endl;
+    cout << "Property Value : KSh " << home.getPropertyValue() << endl;
+
+    // Using the base class function setName()
+    home.setName("Brian Otieno");
+    cout << "\nAfter setName(): " << home.getName() << endl;
+
+    return 0;
+}
