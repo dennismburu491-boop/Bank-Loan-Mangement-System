@@ -1,0 +1,72 @@
+#include <iostream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+// (i) Base class
+class AccountHolder {
+protected:
+    string name;
+
+public:
+    AccountHolder() : name("") {}
+    AccountHolder(string n) : name(n) {}     // used by the derived classes
+
+    void setName(string n) {
+        name = n;
+    }
+
+    string getName() {
+        return name;
+    }
+};
+
+// (ii) Derived class BankAccount
+class BankAccount : public AccountHolder {
+private:
+    int accountNumber;
+    double balance;
+
+public:
+    BankAccount(string n, int accNo, double bal)
+        : AccountHolder(n), accountNumber(accNo), balance(bal) {}
+
+    int getAccountNumber() {
+        return accountNumber;
+    }
+
+    double getBalance() {
+        return balance;
+    }
+};
+
+// (iii) Derived class SavingsAccount
+class SavingsAccount : public BankAccount {
+private:
+    double interestRate;
+
+public:
+    SavingsAccount(string n, int accNo, double bal, double rate)
+        : BankAccount(n, accNo, bal), interestRate(rate) {}
+
+    double getInterestRate() {
+        return interestRate;
+    }
+};
+
+int main() {
+    SavingsAccount account("Amina Wanjiku", 100245, 75000, 6.5);
+
+    cout << fixed << setprecision(2);
+    cout << "----- Bank Management System -----" << endl;
+    cout << "Account Holder : " << account.getName() << endl;
+    cout << "Account Number : " << account.getAccountNumber() << endl;
+    cout << "Balance        : KSh " << account.getBalance() << endl;
+    cout << "Interest Rate  : " << account.getInterestRate() << "%" << endl;
+
+    // Using the base class function setName()
+    account.setName("Brian Otieno");
+    cout << "\nAfter setName(): " << account.getName() << endl;
+
+    return 0;
+}
